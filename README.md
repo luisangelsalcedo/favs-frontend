@@ -10,7 +10,7 @@
 <img src="https://prettier.io/icon.png"  width='30'/>
 </div>
 
-[Repositorio](./favs-frontend/) | [UI Design](https://www.figma.com/file/Z2gIl93XMtpLRUHsEBDKOS/favsApp?node-id=0%3A1)
+### [Repositorio](./favs-frontend/) | [UI Design](https://www.figma.com/file/Z2gIl93XMtpLRUHsEBDKOS/favsApp?node-id=0%3A1) | [Deploy](https://favs-app-luissg.netlify.app/)
 
 <br>
 <img src="./public/img/screenshot.jpg"/>
