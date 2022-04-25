@@ -20,6 +20,8 @@ export const RegisterForm = () => {
   const { openNotice } = useContext(NotificationContext);
 
   const handleChange = () => {
+    emailRef.current.value = emailRef.current.value.trim();
+
     const nameVal = nameRef.current.value.length;
     const emailVal = emailRef.current.value.length;
     const passVal = passRef.current.value.length;
@@ -32,7 +34,7 @@ export const RegisterForm = () => {
     e.preventDefault();
     const newUser = {
       name: nameRef.current.value,
-      email: emailRef.current.value,
+      email: emailRef.current.value.trim().toLowerCase(),
       password: passRef.current.value,
     };
     // console.log(newUser);
@@ -79,7 +81,7 @@ export const RegisterForm = () => {
           />
           <Btn
             ref={btnRef}
-            label="Iniciar sesión"
+            label="Regístrate"
             btn="outline"
             className="btn-block"
             type="submit"
