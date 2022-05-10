@@ -32,7 +32,7 @@ export const FavItem = ({ fa, fav, index, handleEdit }) => {
       list: open.list,
     };
     const { data } = await callEndpoint(updateFavsByIdService(favsUpdate));
-    const { favs } = data;
+    const { data: favs } = data;
     dispatch(updateFavs(favs));
 
     await openAlert(`The item has been deleted`);

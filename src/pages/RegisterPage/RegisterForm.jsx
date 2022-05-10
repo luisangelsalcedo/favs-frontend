@@ -1,5 +1,6 @@
 import { useEffect, useRef, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { userAdapter } from "../../adapters";
 import {
   InputForm,
   Btn,
@@ -37,9 +38,10 @@ export const RegisterForm = () => {
       email: emailRef.current.value.trim().toLowerCase(),
       password: passRef.current.value,
     };
-    // console.log(newUser);
-    const { data } = await callEndpoint(registerUserService(newUser));
-    const { user } = data;
+    const { user } = userAdapter(
+      await callEndpoint(registerUserService(newUser))
+    );
+
     navigate("/login", { replace: true });
     await openNotice(`User ${user.name} created`);
     await openNotice(`Ready to login`);

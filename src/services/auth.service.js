@@ -22,10 +22,10 @@ export const registerUserService = (user) => {
   };
 };
 
-export const validateTokenService = ({ token }) => {
+export const validateTokenService = (token) => {
   const controller = loadAbort();
   return {
-    call: axiosHTTPclient.get(`${ENDPOINTS.VALIDATE}${token}`, {
+    call: axiosHTTPclient.get(`${ENDPOINTS.VALIDATE}/${token}`, {
       signal: controller.signal,
     }),
     controller,

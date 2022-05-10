@@ -17,6 +17,7 @@ import { FavListFormEdit } from "./FavListFormEdit";
 import { FavForm } from "./FavForm";
 import { FavFormEdit } from "./FavFormEdit";
 import "./favsPage.scss";
+import { favsAdapter } from "../../adapters";
 
 export const FavsPage = () => {
   const { id } = useParams();
@@ -30,8 +31,7 @@ export const FavsPage = () => {
 
   const handleLoad = async () => {
     if (!open) {
-      const { data } = await callEndpoint(getFavsByIdService(id));
-      const { favs } = data;
+      const { favs } = favsAdapter(await callEndpoint(getFavsByIdService(id)));
       if (!favs) navigate("/dashboard", { replace: true });
       dispatch(openFavs(favs));
     } else dispatch(openFavsById(id));
@@ -48,11 +48,12 @@ export const FavsPage = () => {
   };
 
   const handleDelete = async () => {
-    const { data } = await callEndpoint(deleteFavsByIdService(id));
-    const { notice } = data;
+    const { message } = favsAdapter(
+      await callEndpoint(deleteFavsByIdService(id))
+    );
     dispatch(deleteFavs(id));
     if (!favsList.legth) navigate("/dashboard", { replace: true });
-    await openAlert(notice);
+    await openAlert(message);
   };
 
   useEffect(() => {

@@ -12,6 +12,7 @@ import {
 import { useFetchAndLoad } from "../../hooks";
 import { createFavs } from "../../redux";
 import { createFavsListService } from "../../services";
+import { favsAdapter } from "../../adapters";
 
 export const FavListForm = () => {
   const { openNotice } = useContext(NotificationContext);
@@ -33,9 +34,11 @@ export const FavListForm = () => {
     const favslist = {
       name: nameRef.current.value,
     };
-    const { data } = await callEndpoint(createFavsListService(favslist));
-    const { favs } = data;
-    if (favs) dispatch(createFavs(favs));
+
+    const { success, favs } = favsAdapter(
+      await callEndpoint(createFavsListService(favslist))
+    );
+    if (success) dispatch(createFavs(favs));
     closeModal();
     await openNotice(`${favs.name} has been created`);
     await openNotice(`Add new items`);

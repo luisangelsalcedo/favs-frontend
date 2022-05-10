@@ -1,5 +1,6 @@
 import { useContext, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { favsAdapter } from "../../adapters";
 import {
   InputForm,
   Btn,
@@ -35,9 +36,12 @@ export const FavListFormEdit = () => {
       _id: open._id,
       name: nameRef.current.value,
     };
-    const { data } = await callEndpoint(updateFavsByIdService(favslist));
-    const { favs } = data;
-    if (favs) dispatch(updateFavs(favs));
+
+    const { success, favs } = favsAdapter(
+      await callEndpoint(updateFavsByIdService(favslist))
+    );
+
+    if (success) dispatch(updateFavs(favs));
     closeModal();
     await openNotice(`Updated ${favs.name}`);
   };

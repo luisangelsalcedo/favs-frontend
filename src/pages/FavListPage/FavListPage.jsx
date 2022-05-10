@@ -12,6 +12,7 @@ import { useFetchAndLoad } from "../../hooks";
 import { getAllFavs } from "../../redux/actions";
 import { getAllFavsService } from "../../services";
 import { FavListForm } from "./FavListForm";
+import { favsAdapter } from "../../adapters";
 import "./favListPage.scss";
 
 export const FavListPage = () => {
@@ -26,9 +27,10 @@ export const FavListPage = () => {
   };
 
   const handleLoad = async () => {
-    const { data } = await callEndpoint(getAllFavsService());
-    const { arrFavs } = data;
-    if (data) {
+    const { success, favs: arrFavs } = favsAdapter(
+      await callEndpoint(getAllFavsService())
+    );
+    if (success) {
       dispatch(getAllFavs(arrFavs));
     } else {
       await openNotice(`Create your first list`);

@@ -10,6 +10,7 @@ import { PATTERNS } from "../../constants";
 import { useFetchAndLoad } from "../../hooks";
 import { loginService, validateTokenService } from "../../services";
 import { login } from "../../redux";
+import { payloadAuthAdapter, tokenAdapter } from "../../adapters";
 
 export const LoginForm = () => {
   const emailRef = useRef();
@@ -36,10 +37,11 @@ export const LoginForm = () => {
       password: passRef.current.value,
     };
 
-    const { data: token } = await callEndpoint(loginService(userLogin));
-    const { data: payload } = await callEndpoint(validateTokenService(token));
-
-    dispatch(login({ ...token, ...payload }));
+    const { token } = tokenAdapter(await callEndpoint(loginService(userLogin)));
+    const { payload } = payloadAuthAdapter(
+      await callEndpoint(validateTokenService(token))
+    );
+    dispatch(login({ token, ...payload }));
     await openNotice(`Welcome  ${payload.name}`);
   };
 

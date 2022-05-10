@@ -53,7 +53,7 @@ export const updateFavsByIdService = (favslist) => {
   return {
     call: axiosHTTPclient.put(
       `${ENDPOINTS.FAVS}/${id}`,
-      { favslist },
+      { name: favslist.name, list: favslist.list },
       {
         signal: controller.signal,
       }
